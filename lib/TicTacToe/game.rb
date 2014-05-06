@@ -2,7 +2,7 @@ module TicTacToe
 	class Game
 		attr_accessor :players, :board, :current_player, :second_player, :move_list
 		def initialize(players, board = Board.new)
-			@players = players
+      @players = players
 			@board = board
 			@current_player, @second_player = players.shuffle
 			@move_list = Array.new
@@ -31,8 +31,8 @@ module TicTacToe
 				board.formatted_grid
 				puts ""
 				puts ask_for_move
-				x,y = get_move
-				board.set_cell(x,y,current_player.token)
+				row,column = get_move
+				board.set_cell(row,column,current_player.token)
 				if board.game_over
 					puts message
 					board.formatted_grid
@@ -46,24 +46,16 @@ module TicTacToe
 		private
 
 		def move_to_coordinate(move)
-			mapping = {
-				"1" => [0, 0],
-				"2" => [1, 0],
-				"3" => [2, 0],
-				"4" => [0, 1],
-				"5" => [1, 1],
-				"6" => [2, 1],
-				"7" => [0, 2],
-				"8" => [1, 2],
-				"9" => [2, 2]
-			}
-			if !move_list.include?(move) and mapping.include?(move)
+			mapping = { "1" => [0, 0], "2" => [1, 0], "3" => [2, 0],
+                  "4" => [0, 1], "5" => [1, 1], "6" => [2, 1],
+                  "7" => [0, 2], "8" => [1, 2], "9" => [2, 2] }
+      if !move_list.include?(move) and mapping.include?(move)
 				move_list.push(move)
 				return mapping[move]				
 			else				
 				puts "Error: invalid move!"
 				puts ask_for_move
-				x, y = get_move
+				row, column = get_move
 			end
 		end
 	end
