@@ -1,11 +1,15 @@
 module TicTacToe
 	class Game
-		attr_accessor :players, :board, :current_player, :second_player, :move_list
+		attr_accessor :players, :board, :current_player, :second_player, :move_list, :mapping
 		def initialize(players, board = Board.new)
-      @players = players
+			@players = players
 			@board = board
 			@current_player, @second_player = players.shuffle
 			@move_list = Array.new
+			@mapping = { 
+				"1" => [0, 0], "2" => [1, 0], "3" => [2, 0],
+				"4" => [0, 1], "5" => [1, 1], "6" => [2, 1],
+				"7" => [0, 2], "8" => [1, 2], "9" => [2, 2] }
 		end
 
 		def switch_players
@@ -46,13 +50,10 @@ module TicTacToe
 		private
 
 		def move_to_coordinate(move)
-			mapping = { "1" => [0, 0], "2" => [1, 0], "3" => [2, 0],
-                  "4" => [0, 1], "5" => [1, 1], "6" => [2, 1],
-                  "7" => [0, 2], "8" => [1, 2], "9" => [2, 2] }
-      if !move_list.include?(move) and mapping.include?(move)
+			if !move_list.include?(move) and mapping.include?(move)
 				move_list.push(move)
-				return mapping[move]				
-			else				
+				return mapping[move]
+			else
 				puts "Error: invalid move!"
 				puts ask_for_move
 				row, column = get_move
