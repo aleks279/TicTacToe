@@ -17,7 +17,7 @@ module TicTacToe
 		end
 
 		def ask_for_move
-			"#{current_player.name}: Enter a number from 1 to 9 to make your move"
+			puts "#{current_player.name}: Enter a number from 1 to 9 to make your move"
 		end
 
 		def get_move(move = gets.chomp)
@@ -25,21 +25,21 @@ module TicTacToe
 		end
 
 		def message
-			return "#{current_player.name} won!" if board.game_over == :winner
-			return "It's a draw!" if board.game_over == :draw
+			puts "#{current_player.name} won!" if board.game_over == :winner
+			puts "It's a draw!" if board.game_over == :draw
 		end
 
 		def play
 			puts "#{current_player.name} is the first player"
 			while true
-				board.formatted_grid
+				formatted_grid
 				puts ""
-				puts ask_for_move
+				ask_for_move
 				row,column = get_move
 				board.set_cell(row,column,current_player.token)
 				if board.game_over
-					puts message
-					board.formatted_grid
+					message
+					formatted_grid
 					return
 				else
 					switch_players
@@ -48,6 +48,12 @@ module TicTacToe
 		end
 
 		private
+
+		def formatted_grid
+			return board.grid.each do |row|
+				puts row.map {|cell| cell.value.empty? ? "_" : cell.value}.join(" ")
+			end
+		end
 
 		def move_to_coordinate(move)
 			if !move_list.include?(move) and mapping.include?(move)
