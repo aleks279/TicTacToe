@@ -13,12 +13,6 @@ module TicTacToe
 			get_cell(x,y).value = value
 		end
 
-		def formatted_grid
-			return @grid.each do |row|
-				puts row.map {|cell| cell.value.empty? ? "_" : cell.value}.join(" ")
-			end
-		end
-
 		def game_over
 			return :winner if winner?
 			return :draw if draw?
@@ -33,8 +27,8 @@ module TicTacToe
 
 		def winner?
 			winning_positions.each do |winning_position|
-				next if winning_position_values(winning_position).all_empty?
-				return true if winning_position_values(winning_position).all_same?
+				next if all_empty?(winning_position_values(winning_position))
+				return true if all_same?(winning_position_values(winning_position))
 			end
 			false
 		end
@@ -48,7 +42,7 @@ module TicTacToe
 		end
 
 		def draw?
-			grid.flatten.map {|cell| cell.value}.none_empty?
+			none_empty?(grid)
 		end
 
 		def diagonals
@@ -57,5 +51,24 @@ module TicTacToe
 				[get_cell(0,2), get_cell(1,1), get_cell(2,0)]
 			]
 		end
+
+		def all_empty?(input)
+			input.all? { |element| element.to_s.empty?}
+		end
+
+		def all_same?(input)
+			input.all? {|element| element == input[0]}
+		end
+
+		def any_empty?(input)
+			input.each do |element|
+				return true if element.any? { |ele| ele.to_s.empty? }
+			end
+		end
+
+		def none_empty?(input)
+			!any_empty?(input)
+		end
+
 	end
 end
