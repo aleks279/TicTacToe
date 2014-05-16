@@ -1,4 +1,4 @@
-require_relative "../tictactoe.rb"
+require_relative "../lib/tictactoe.rb"
 
 puts "Welcome!"
 player1 = TicTacToe::Player.new({token: "X", name: "Player 1"})

@@ -1,7 +1,10 @@
 module TicTacToe
+	require 'observer'
 	class Game
+		include Observable
 		attr_accessor :players, :board, :current_player, :second_player, :move_list, :mapping
 		def initialize(players, board = Board.new)
+			add_observer(Notifier.new)
 			@players = players
 			@board = board
 			@current_player, @second_player = players.shuffle
@@ -24,11 +27,6 @@ module TicTacToe
 			move_to_coordinate(move)
 		end
 
-		def message
-			puts "#{current_player.name} won!" if board.game_over == :winner
-			puts "It's a draw!" if board.game_over == :draw
-		end
-
 		def play
 			puts "#{current_player.name} is the first player"
 			while true
@@ -38,7 +36,8 @@ module TicTacToe
 				row,column = get_move
 				board.set_cell(row,column,current_player.token)
 				if board.game_over
-					message
+					changed
+					notify_observers(current_player, board.game_over)
 					formatted_grid
 					return
 				else
