@@ -34,7 +34,7 @@ module TicTacToe
 				puts ""
 				ask_for_move
 				row,column = get_move
-				board.set_cell(row,column,current_player.token)
+				board.grid[column][row].value = current_player.token
 				if board.game_over
 					changed
 					notify_observers(current_player, board.game_over)

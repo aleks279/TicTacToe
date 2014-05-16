@@ -5,14 +5,6 @@ module TicTacToe
 			@grid = input.fetch(:grid, default_grid)
 		end
 
-		def get_cell(x,y)
-			@grid[y][x]
-		end
-
-		def set_cell(x,y,value)
-			get_cell(x,y).value = value
-		end
-
 		def game_over
 			return :winner if winner?
 			return :draw if draw?
@@ -47,8 +39,8 @@ module TicTacToe
 
 		def diagonals
 			[
-				[get_cell(0,0), get_cell(1,1), get_cell(2,2)],
-				[get_cell(0,2), get_cell(1,1), get_cell(2,0)]
+				[grid[0][0], grid[1][1], grid[2][2]],
+				[grid[2][0], grid[1][1], grid[0][2]]
 			]
 		end
 
