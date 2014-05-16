@@ -1,11 +1,11 @@
 Tic Tac Toe
 ===========
 
-For playing the game type on console:
+Instructions:
 
 1.  Install Ruby with RVM
 
-> \curl -sSL https://get.rvm.io | bash -s stable –ruby
+	*	\curl -sSL https://get.rvm.io | bash -s stable –ruby
 
 2.  git clone https://github.com/aleks279/TicTacToe.git
 
