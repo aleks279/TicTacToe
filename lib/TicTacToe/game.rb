@@ -3,14 +3,16 @@ module TicTacToe
   class Game
     include Observable
     attr_accessor :players, :board, :current_player, :second_player, :move_list
+    PLAYER1 = Player.new(token: "X", name: "Player 1")
+    PLAYER2 = Player.new(token: "O", name: "Player 2")
     MAPPING = { 
       "1" => [0, 0], "2" => [1, 0], "3" => [2, 0],
       "4" => [0, 1], "5" => [1, 1], "6" => [2, 1],
       "7" => [0, 2], "8" => [1, 2], "9" => [2, 2] }
 
-      def initialize(players, board = Board.new)
+      def initialize(board = Board.new)
         add_observer(Notifier.new)
-        @players = players
+        @players = [PLAYER1, PLAYER2]
         @board = board
         @current_player, @second_player = players.shuffle
         @move_list = Array.new
@@ -19,8 +21,6 @@ module TicTacToe
       def play
         puts "#{current_player.name} is the first player"
         next_turn until board.game_over
-        changed
-        notify_observers(current_player, board.game_over)
         print_formatted_grid
       end
 
@@ -29,6 +29,8 @@ module TicTacToe
         ask_for_move
         row, column = get_move
         board.grid[column][row].value = current_player.token
+        changed
+        notify_observers(current_player, board.game_over)
         switch_players
       end
 
