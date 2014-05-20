@@ -27,6 +27,8 @@ module TicTacToe
     def next_turn
       print_formatted_grid
       ask_for_move
+      row, column = get_move
+      board.grid[column][row].value = current_player.token
       switch_players
     end
 
@@ -38,9 +40,7 @@ module TicTacToe
 
 		def ask_for_move
 			puts "#{current_player.name}: Enter a number from 1 to 9 to make your move"
-      row, column = get_move
-      board.grid[column][row].value = current_player.token
-		end
+    end
 
 		def get_move(move = gets.chomp)
 			move_to_coordinate(move)
@@ -52,14 +52,18 @@ module TicTacToe
 			end
 		end
 
+    def valid_move?(move)
+      !move_list.include?(move) and MAPPING.include?(move)
+    end
+
 		def move_to_coordinate(move)
-			if !move_list.include?(move) and MAPPING.include?(move)
+			if valid_move?(move)
 				move_list.push(move)
 				return MAPPING[move]
 			else
 				puts "Error: invalid move!"
-				puts ask_for_move
-				row, column = get_move
+				ask_for_move
+        row, column = get_move
 			end
 		end
 	end
