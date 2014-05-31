@@ -6,13 +6,9 @@ module TicTacToe
     end
 
     def game_over
-      if winner?
-        :winner
-      elsif draw?
-        :draw
-      else
-        false
-      end
+      return :winner if winner?
+      return :draw if draw?
+      false
     end
 
     private
@@ -57,14 +53,11 @@ module TicTacToe
     end
 
     def any_empty?(input)
-      input.each do |element|
-        return true if element.any? { |ele| ele.to_s.empty? }
-      end
+      input.flatten.any? { |cell| cell.value.to_s.empty? }
     end
 
     def none_empty?(input)
       !any_empty?(input)
     end
-
   end
 end
