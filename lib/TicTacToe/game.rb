@@ -22,6 +22,7 @@ module TicTacToe
         puts "#{current_player.name} is the first player"
         next_turn until board.game_over
         print_formatted_grid
+        puts ""
       end
 
       def next_turn
@@ -29,9 +30,13 @@ module TicTacToe
         ask_for_move
         row, column = get_move
         board.grid[column][row].value = current_player.token
-        changed
-        notify_observers(current_player, board.game_over)
-        switch_players
+        if board.game_over
+          puts ""
+          changed
+          notify_observers(current_player, board.game_over)
+        else
+          switch_players
+        end
       end
 
       private
